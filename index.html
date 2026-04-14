@@ -3,731 +3,749 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Emmanuel Omondi Ochieng | Data Scientist</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Emmanuel Ochieng — Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300&family=Epilogue:wght@300;400;500;600&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0804;
+  --bg2:#130d07;
+  --bg3:#1c1208;
+  --border:#2e1c0c;
+  --sand:#c4a07a;
+  --sand-l:#e8d4b4;
+  --amber:#d4823a;
+  --amber-b:#f09848;
+  --cream:#f2e8d8;
+  --dim:#8a7060;
+  --muted:#4a3828;
+  --green:#3a6b48;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:'Epilogue',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  cursor:none;
+}
 
-  :root {
-    --navy: #060c1a;
-    --navy-mid: #0d1729;
-    --navy-light: #152035;
-    --navy-border: #1e2e48;
-    --gold: #c9922a;
-    --gold-light: #e8b04a;
-    --gold-dim: #9a6e1e;
-    --white: #f0eee8;
-    --white-dim: #a8a49c;
-    --white-muted: #5c5850;
-    --teal: #1da87e;
-    --teal-dim: #0d6e52;
-    --red: #c94040;
-  }
+/* CURSOR */
+#cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--amber);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transition:transform 0.15s ease,opacity 0.2s;
+  transform:translate(-50%,-50%);
+}
+#cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1px solid rgba(212,130,58,0.4);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transition:width 0.3s,height 0.3s;
+  transform:translate(-50%,-50%);
+}
 
-  html { scroll-behavior: smooth; }
+/* GRAIN */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.35;pointer-events:none;z-index:1;
+}
 
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem 6%;
+  background:rgba(12,8,4,0.8);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(46,28,12,0.6);
+}
+.nav-mark{
+  font-family:'Fraunces',serif;font-size:1.1rem;font-weight:300;
+  font-style:italic;color:var(--sand);text-decoration:none;
+}
+.nav-right{display:flex;gap:2.5rem;align-items:center}
+.nav-right a{
+  font-family:'Space Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--dim);text-decoration:none;transition:color 0.2s;
+}
+.nav-right a:hover{color:var(--sand-l)}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:var(--amber);animation:blink 2.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
-  /* ─── NAV ─── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.25rem 5%;
-    background: rgba(6, 12, 26, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(201, 146, 42, 0.15);
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.35rem; font-weight: 500; letter-spacing: 0.04em;
-    color: var(--white); text-decoration: none;
-  }
-  .nav-logo span { color: var(--gold); }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--white-dim); text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--gold-light); }
+/* HERO */
+#hero{
+  min-height:100vh;padding:0 6%;
+  display:grid;grid-template-columns:1fr 340px;
+  align-items:end;padding-bottom:6rem;padding-top:120px;
+  position:relative;gap:2rem;
+}
+.hero-bg-text{
+  position:absolute;top:50%;left:-2%;
+  transform:translateY(-50%);
+  font-family:'Fraunces',serif;font-size:clamp(180px,22vw,320px);
+  font-weight:200;font-style:italic;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(196,160,122,0.07);
+  pointer-events:none;line-height:1;white-space:nowrap;z-index:0;
+}
+.hero-left{position:relative;z-index:2}
+.hero-eyebrow{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:2rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--amber)}
+h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(4rem,9vw,8.5rem);
+  font-weight:200;line-height:0.92;letter-spacing:-0.02em;
+}
+h1 .line1{display:block;color:var(--cream)}
+h1 .line2{display:block;font-style:italic;color:var(--sand)}
+h1 .line3{
+  display:block;color:transparent;
+  -webkit-text-stroke:1px var(--muted);font-style:italic;
+}
+.hero-sub{
+  font-size:1.05rem;color:var(--dim);
+  max-width:480px;margin-top:2.5rem;line-height:1.75;
+}
+.hero-sub strong{color:var(--sand-l);font-weight:500}
+.hero-actions{display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap}
+.btn-a{
+  padding:0.9rem 2.2rem;background:var(--amber);
+  color:var(--bg);font-family:'Epilogue',sans-serif;
+  font-size:0.8rem;font-weight:600;letter-spacing:0.08em;
+  text-transform:uppercase;text-decoration:none;
+  cursor:none;transition:background 0.2s,transform 0.15s;display:inline-block;
+}
+.btn-a:hover{background:var(--amber-b);transform:translateY(-2px)}
+.btn-b{
+  padding:0.9rem 2.2rem;background:transparent;
+  color:var(--dim);font-family:'Epilogue',sans-serif;
+  font-size:0.8rem;font-weight:500;letter-spacing:0.08em;
+  text-transform:uppercase;text-decoration:none;
+  border:1px solid var(--muted);cursor:none;
+  transition:border-color 0.2s,color 0.2s;display:inline-block;
+}
+.btn-b:hover{border-color:var(--sand);color:var(--sand)}
+.hero-right{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;gap:1.5rem;
+  border-left:1px solid var(--border);padding-left:2rem;
+}
+.hero-card{padding:1.25rem;background:var(--bg2);border:1px solid var(--border)}
+.hc-label{
+  font-family:'Space Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.5rem;
+}
+.hc-val{
+  font-family:'Fraunces',serif;
+  font-size:1.8rem;font-weight:300;color:var(--amber);line-height:1;
+}
+.hc-desc{font-size:0.8rem;color:var(--dim);margin-top:0.25rem}
+.status-pill{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.5rem 0.9rem;
+  background:rgba(58,107,72,0.15);
+  border:1px solid rgba(58,107,72,0.4);
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.1em;color:#6ab584;margin-top:1rem;
+}
+.s-dot{width:6px;height:6px;border-radius:50%;background:#6ab584;animation:blink 2s infinite}
 
-  /* ─── HERO ─── */
-  #hero {
-    min-height: 100vh;
-    display: flex; align-items: center;
-    padding: 0 5%; padding-top: 80px;
-    position: relative; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 60% 60% at 70% 50%, rgba(201,146,42,0.06) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(29,168,126,0.05) 0%, transparent 60%);
-  }
-  .hero-grid {
-    position: absolute; inset: 0; opacity: 0.035;
-    background-image: linear-gradient(var(--navy-border) 1px, transparent 1px),
-                      linear-gradient(90deg, var(--navy-border) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-  .hero-content { position: relative; max-width: 780px; }
-  .hero-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 1.5rem;
-    display: flex; align-items: center; gap: 0.75rem;
-  }
-  .hero-label::before {
-    content: ''; display: block; width: 32px; height: 1px;
-    background: var(--gold);
-  }
-  h1.hero-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.2rem, 7vw, 6rem);
-    font-weight: 300; line-height: 1.05;
-    letter-spacing: -0.01em;
-    color: var(--white);
-    margin-bottom: 0.5rem;
-  }
-  h1.hero-name em { font-style: italic; color: var(--gold-light); }
-  .hero-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--white-dim); margin-bottom: 1.5rem;
-  }
-  .hero-bio {
-    font-size: 1.05rem; color: var(--white-dim);
-    line-height: 1.75; max-width: 560px; margin-bottom: 2.5rem;
-  }
-  .hero-bio strong { color: var(--white); font-weight: 600; }
-  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary {
-    padding: 0.85rem 2rem;
-    background: var(--gold);
-    color: var(--navy);
-    font-family: 'Syne', sans-serif;
-    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    text-decoration: none; border: none; cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
-  .btn-outline {
-    padding: 0.85rem 2rem;
-    background: transparent;
-    color: var(--white);
-    font-family: 'Syne', sans-serif;
-    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-    text-decoration: none; border: 1px solid var(--navy-border);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-  .hero-stats {
-    display: flex; gap: 3rem; margin-top: 4rem;
-    padding-top: 2.5rem; border-top: 1px solid var(--navy-border);
-  }
-  .stat-item {}
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.4rem; font-weight: 500; color: var(--gold);
-    line-height: 1;
-  }
-  .stat-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--white-muted); margin-top: 0.3rem;
-  }
+/* TICKER */
+.ticker-wrap{
+  overflow:hidden;border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);padding:0.9rem 0;position:relative;z-index:2;
+}
+.ticker-track{
+  display:flex;animation:ticker 30s linear infinite;width:max-content;
+}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-item{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--dim);padding:0 2.5rem;white-space:nowrap;
+}
+.ticker-item span{color:var(--amber);margin-right:2.5rem}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-  /* ─── SECTION COMMONS ─── */
-  section { padding: 6rem 5%; }
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 0.75rem;
-    display: flex; align-items: center; gap: 0.75rem;
-  }
-  .section-label::before {
-    content: ''; display: block; width: 24px; height: 1px; background: var(--gold);
-  }
-  h2.section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 400; color: var(--white);
-    line-height: 1.15; margin-bottom: 1rem;
-  }
-  h2.section-title em { font-style: italic; color: var(--gold-light); }
-  .section-sub {
-    font-size: 1rem; color: var(--white-dim);
-    max-width: 540px; margin-bottom: 3.5rem; line-height: 1.7;
-  }
+/* ABOUT */
+#about{
+  padding:8rem 6%;
+  display:grid;grid-template-columns:1.1fr 1fr;
+  gap:6rem;align-items:start;position:relative;
+}
+#about::before{
+  content:'02';position:absolute;right:5%;top:6rem;
+  font-family:'Fraunces',serif;font-size:10rem;font-weight:200;
+  font-style:italic;color:transparent;
+  -webkit-text-stroke:1px var(--border);
+  pointer-events:none;line-height:1;
+}
+.about-tag{
+  font-family:'Space Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.about-tag::before{content:'';width:28px;height:1px;background:var(--amber)}
+h2.sec-title{
+  font-family:'Fraunces',serif;
+  font-size:clamp(2.4rem,4vw,3.6rem);
+  font-weight:200;line-height:1.1;color:var(--cream);margin-bottom:1.75rem;
+}
+h2.sec-title em{font-style:italic;color:var(--sand)}
+.about-body p{font-size:1rem;color:var(--dim);line-height:1.85;margin-bottom:1.2rem}
+.about-body p strong{color:var(--sand-l);font-weight:500}
+.aira-block{
+  margin-top:2rem;padding:1.25rem 1.5rem;
+  border-left:2px solid var(--amber);
+  background:rgba(212,130,58,0.05);
+}
+.aira-role{font-family:'Fraunces',serif;font-size:1.1rem;font-style:italic;color:var(--sand)}
+.aira-name{
+  font-family:'Space Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--dim);margin-top:0.3rem;
+}
+.skills-col{display:flex;flex-direction:column;gap:1.75rem}
+.sk-label{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.75rem;
+  padding-bottom:0.5rem;border-bottom:1px solid var(--border);
+}
+.sk-list{display:flex;flex-wrap:wrap;gap:0.5rem}
+.sk{
+  padding:0.3rem 0.8rem;font-size:0.8rem;color:var(--dim);
+  border:1px solid var(--border);background:var(--bg2);
+  transition:border-color 0.2s,color 0.2s;
+}
+.sk:hover{border-color:var(--sand);color:var(--sand-l)}
+.sk.hi{border-color:var(--amber);color:var(--sand-l);background:rgba(212,130,58,0.07)}
 
-  /* ─── ABOUT ─── */
-  #about { background: var(--navy-mid); }
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
-    align-items: start;
-  }
-  .about-text p {
-    font-size: 1.02rem; color: var(--white-dim);
-    line-height: 1.8; margin-bottom: 1.25rem;
-  }
-  .about-text p strong { color: var(--white); font-weight: 600; }
-  .aira-badge {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    padding: 0.6rem 1.2rem;
-    border: 1px solid var(--gold-dim);
-    background: rgba(201,146,42,0.07);
-    margin-top: 1rem;
-  }
-  .aira-badge-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--teal); animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.85); }
-  }
-  .aira-badge-text {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 0.1em; color: var(--gold-light);
-  }
-  .skills-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-  }
-  .skill-category { }
-  .skill-cat-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--gold-dim); margin-bottom: 0.6rem;
-  }
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .skill-tag {
-    padding: 0.3rem 0.75rem;
-    background: var(--navy-light);
-    border: 1px solid var(--navy-border);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; color: var(--white-dim);
-    letter-spacing: 0.05em;
-  }
-  .skill-tag.highlight {
-    border-color: var(--gold-dim);
-    color: var(--gold-light);
-    background: rgba(201,146,42,0.06);
-  }
+/* PROJECTS */
+#projects{padding:6rem 6%;background:var(--bg2)}
+.proj-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:4rem;flex-wrap:wrap;gap:1rem;
+}
+.proj-count{
+  font-family:'Fraunces',serif;font-size:5rem;
+  font-weight:200;font-style:italic;color:var(--border);line-height:1;
+}
+.bento{
+  display:grid;grid-template-columns:repeat(12,1fr);
+  gap:2px;background:var(--border);
+}
+.pc{
+  background:var(--bg);padding:2.2rem;
+  display:flex;flex-direction:column;
+  transition:background 0.3s;position:relative;overflow:hidden;cursor:none;
+}
+.pc:hover{background:var(--bg3)}
+.pc::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--amber);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s ease;
+}
+.pc:hover::after{transform:scaleX(1)}
+.pc-1{grid-column:span 7}.pc-2{grid-column:span 5}
+.pc-3{grid-column:span 5}.pc-4{grid-column:span 7}
+.pc-5{grid-column:span 6}.pc-6{grid-column:span 6}
+.pc-n{
+  font-family:'Fraunces',serif;font-size:4rem;font-weight:200;
+  font-style:italic;color:var(--border);line-height:1;margin-bottom:1rem;
+}
+.pc-sector{
+  font-family:'Space Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);margin-bottom:0.6rem;
+}
+h3.pc-title{
+  font-family:'Fraunces',serif;font-size:1.4rem;font-weight:300;
+  color:var(--cream);line-height:1.2;margin-bottom:0.75rem;
+}
+.pc-desc{font-size:0.88rem;color:var(--dim);line-height:1.7;flex:1;margin-bottom:1.25rem}
+.pc-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1.25rem}
+.pc-tag{
+  padding:0.18rem 0.55rem;font-family:'Space Mono',monospace;
+  font-size:0.58rem;color:var(--muted);border:1px solid var(--border);
+}
+.pc-link{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:'Space Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--sand);text-decoration:none;transition:gap 0.2s,color 0.2s;margin-top:auto;
+}
+.pc-link:hover{gap:0.85rem;color:var(--amber-b)}
+.pc-link::after{content:'↗'}
 
-  /* ─── PROJECTS ─── */
-  #projects { background: var(--navy); }
-  .projects-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 1.5px;
-    background: var(--navy-border);
-    border: 1px solid var(--navy-border);
-  }
-  .project-card {
-    background: var(--navy);
-    padding: 2rem;
-    position: relative; overflow: hidden;
-    transition: background 0.25s;
-    display: flex; flex-direction: column;
-  }
-  .project-card:hover { background: var(--navy-mid); }
-  .project-card::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 0; height: 2px; background: var(--gold);
-    transition: width 0.35s ease;
-  }
-  .project-card:hover::before { width: 100%; }
-  .project-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.5rem; font-weight: 300;
-    color: var(--navy-border); line-height: 1;
-    position: absolute; top: 1.5rem; right: 1.75rem;
-    transition: color 0.25s;
-  }
-  .project-card:hover .project-num { color: rgba(201,146,42,0.12); }
-  .project-sector {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--teal); margin-bottom: 0.75rem;
-  }
-  h3.project-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.45rem; font-weight: 500;
-    color: var(--white); line-height: 1.2; margin-bottom: 0.75rem;
-  }
-  .project-desc {
-    font-size: 0.9rem; color: var(--white-dim);
-    line-height: 1.65; flex: 1; margin-bottom: 1.25rem;
-  }
-  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
-  .project-tag {
-    padding: 0.2rem 0.6rem;
-    background: var(--navy-light);
-    border: 1px solid var(--navy-border);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem; color: var(--white-muted);
-    letter-spacing: 0.05em;
-  }
-  .project-link {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--gold); text-decoration: none;
-    transition: gap 0.2s, color 0.2s;
-    margin-top: auto;
-  }
-  .project-link:hover { gap: 0.75rem; color: var(--gold-light); }
-  .project-link::after { content: '→'; }
+/* AIRA */
+#aira{
+  padding:8rem 6%;
+  display:grid;grid-template-columns:1fr 1.2fr;
+  gap:5rem;align-items:start;
+}
+.aira-wm{
+  font-family:'Fraunces',serif;
+  font-size:clamp(4rem,8vw,7rem);font-weight:200;
+  line-height:0.9;color:var(--cream);letter-spacing:-0.02em;
+}
+.aira-wm span{font-style:italic;color:var(--amber)}
+.aira-full-name{
+  font-family:'Space Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--muted);margin-top:1rem;line-height:1.8;
+}
+.aira-desc{font-size:1rem;color:var(--dim);line-height:1.8;margin-top:1.75rem;max-width:400px}
+.aira-desc strong{color:var(--sand-l);font-weight:500}
+.aira-sectors{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.75rem}
+.aira-sec{
+  padding:0.4rem 1rem;font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--green);border:1px solid rgba(58,107,72,0.4);
+  background:rgba(58,107,72,0.08);
+}
+.pillars{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+.pillar{
+  background:var(--bg);padding:1.5rem;
+  display:flex;gap:1.25rem;align-items:flex-start;transition:background 0.25s;
+}
+.pillar:hover{background:var(--bg3)}
+.p-icon{
+  width:38px;height:38px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(212,130,58,0.1);
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;color:var(--amber);font-weight:700;
+}
+.p-title{
+  font-family:'Fraunces',serif;font-size:1rem;
+  font-weight:300;color:var(--sand-l);margin-bottom:0.25rem;
+}
+.p-desc{font-size:0.83rem;color:var(--dim);line-height:1.6}
 
-  /* ─── AIRA ─── */
-  #aira {
-    background: var(--navy-mid);
-    border-top: 1px solid var(--navy-border);
-    border-bottom: 1px solid var(--navy-border);
-  }
-  .aira-inner {
-    display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem;
-    align-items: center;
-  }
-  .aira-logo-block {
-    display: flex; flex-direction: column; gap: 1.5rem;
-  }
-  .aira-wordmark {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4.5rem; font-weight: 300; letter-spacing: 0.06em;
-    color: var(--white); line-height: 1;
-  }
-  .aira-wordmark span { color: var(--gold); }
-  .aira-full {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--white-muted); line-height: 1.6;
-  }
-  .aira-pillars {
-    display: flex; flex-direction: column; gap: 1rem;
-  }
-  .aira-pillar {
-    display: flex; gap: 1rem; align-items: flex-start;
-    padding: 1.1rem 1.25rem;
-    border: 1px solid var(--navy-border);
-    background: var(--navy);
-    transition: border-color 0.2s;
-  }
-  .aira-pillar:hover { border-color: var(--gold-dim); }
-  .aira-pillar-icon {
-    width: 32px; height: 32px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(201,146,42,0.1);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; color: var(--gold); font-weight: 500;
-  }
-  .aira-pillar-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.88rem; font-weight: 600; color: var(--white);
-    margin-bottom: 0.2rem;
-  }
-  .aira-pillar-desc {
-    font-size: 0.82rem; color: var(--white-dim); line-height: 1.55;
-  }
+/* CONTACT */
+#contact{
+  padding:8rem 6%;background:var(--bg2);
+  display:grid;grid-template-columns:1.2fr 1fr;
+  gap:5rem;align-items:center;
+}
+.c-big{
+  font-family:'Fraunces',serif;
+  font-size:clamp(3rem,6vw,5.5rem);
+  font-weight:200;line-height:1;color:var(--cream);margin-bottom:1.5rem;
+}
+.c-big em{font-style:italic;color:var(--sand)}
+.c-sub{font-size:1rem;color:var(--dim);line-height:1.75;max-width:440px}
+.c-email{
+  display:block;font-family:'Fraunces',serif;
+  font-size:clamp(1.1rem,2.2vw,1.6rem);font-weight:300;
+  font-style:italic;color:var(--amber);text-decoration:none;
+  margin-top:2rem;transition:color 0.2s;
+}
+.c-email:hover{color:var(--amber-b)}
+.contact-right{display:flex;flex-direction:column;gap:0.75rem}
+.c-link{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.25rem 1.5rem;border:1px solid var(--border);
+  background:var(--bg);text-decoration:none;
+  transition:border-color 0.2s,background 0.2s;cursor:none;
+}
+.c-link:hover{border-color:var(--sand);background:var(--bg3)}
+.c-link-label{
+  font-family:'Fraunces',serif;font-size:1.1rem;
+  font-weight:300;font-style:italic;color:var(--sand-l);
+}
+.c-link-arrow{font-size:1.2rem;color:var(--muted);transition:transform 0.2s,color 0.2s}
+.c-link:hover .c-link-arrow{transform:translate(4px,-4px);color:var(--amber)}
 
-  /* ─── CONTACT ─── */
-  #contact { background: var(--navy); text-align: center; }
-  .contact-inner { max-width: 640px; margin: 0 auto; }
-  .contact-email {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    font-weight: 400; color: var(--gold-light);
-    text-decoration: none; letter-spacing: 0.02em;
-    display: block; margin: 1.5rem 0 2rem;
-    transition: color 0.2s;
-  }
-  .contact-email:hover { color: var(--white); }
-  .social-links { display: flex; justify-content: center; gap: 1.5rem; }
-  .social-link {
-    padding: 0.65rem 1.5rem;
-    border: 1px solid var(--navy-border);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--white-dim); text-decoration: none;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+/* FOOTER */
+footer{
+  padding:2rem 6%;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.f-left{
+  font-family:'Fraunces',serif;font-size:0.9rem;
+  font-weight:300;font-style:italic;color:var(--muted);
+}
+.f-right{
+  font-family:'Space Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+}
+.f-right span{color:var(--amber)}
 
-  /* ─── FOOTER ─── */
-  footer {
-    padding: 2rem 5%;
-    border-top: 1px solid var(--navy-border);
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 1rem;
-  }
-  .footer-copy {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 0.1em; color: var(--white-muted);
-  }
-  .footer-copy span { color: var(--gold-dim); }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.up{opacity:1;transform:translateY(0)}
 
-  /* ─── SCROLL ANIMATIONS ─── */
-  .fade-up {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 768px) {
-    .about-grid, .aira-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .hero-stats { gap: 2rem; }
-    .projects-grid { grid-template-columns: 1fr; }
-    nav { padding: 1rem 4%; }
-    .nav-links { gap: 1.25rem; }
-  }
-  @media (max-width: 480px) {
-    .nav-links { display: none; }
-    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
-  }
+/* RESPONSIVE */
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding-top:100px}
+  .hero-right{border-left:none;border-top:1px solid var(--border);padding-left:0;padding-top:2rem;flex-direction:row;flex-wrap:wrap}
+  .hero-card{flex:1;min-width:140px}
+  #about,#aira,#contact{grid-template-columns:1fr;gap:3rem}
+  #about::before{display:none}
+  .bento{grid-template-columns:1fr}
+  .pc-1,.pc-2,.pc-3,.pc-4,.pc-5,.pc-6{grid-column:span 1}
+}
+@media(max-width:560px){
+  nav{padding:1.25rem 5%}
+  #hero,#about,#projects,#aira,#contact{padding-left:5%;padding-right:5%}
+  h1{font-size:clamp(3rem,14vw,5rem)}
+  .nav-right a:not(:last-child){display:none}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
 <nav>
-  <a class="nav-logo" href="#hero">EO<span>.</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#aira">AIRA</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <a class="nav-mark" href="#hero">Emmanuel.</a>
+  <div class="nav-right">
+    <a href="#about">About</a>
+    <a href="#projects">Work</a>
+    <a href="#aira">AIRA</a>
+    <a href="#contact">Contact</a>
+    <div class="nav-dot"></div>
+  </div>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="hero-label">Data Scientist &amp; AI Researcher</div>
-    <h1 class="hero-name">
-      Emmanuel<br>
-      <em>Omondi</em> Ochieng
+  <div class="hero-bg-text">Data</div>
+  <div class="hero-left reveal">
+    <div class="hero-eyebrow">Data Scientist &amp; AI Builder &nbsp;·&nbsp; Nairobi, Kenya</div>
+    <h1>
+      <span class="line1">Emmanuel</span>
+      <span class="line2">Omondi</span>
+      <span class="line3">Ochieng</span>
     </h1>
-    <p class="hero-title">BSc Data Science &nbsp;·&nbsp; Co-operative University of Kenya</p>
-    <p class="hero-bio">
-      Building <strong>deployable AI systems</strong> that solve real-world problems across agriculture, finance, and logistics in Kenya and beyond. Co-founder of <strong>AIRA</strong> — Applied Intelligence &amp; Research Associates.
+    <p class="hero-sub">
+      I build <strong>AI systems that ship</strong> — from commodity risk engines to crop yield predictors. Every project is deployable, every line of code has a purpose.
     </p>
-    <div class="hero-cta">
-      <a class="btn-primary" href="#projects">View Projects</a>
-      <a class="btn-outline" href="https://github.com/EmmanuelOchieng01" target="_blank">GitHub</a>
-      <a class="btn-outline" href="https://www.linkedin.com/in/emmanuel-ochieng-a656a1261/" target="_blank">LinkedIn</a>
+    <div class="hero-actions">
+      <a class="btn-a" href="#projects">See My Work</a>
+      <a class="btn-b" href="https://github.com/EmmanuelOchieng01" target="_blank">GitHub</a>
+      <a class="btn-b" href="https://www.linkedin.com/in/emmanuel-ochieng-a656a1261/" target="_blank">LinkedIn</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num">6</div>
-        <div class="stat-label">Live Projects</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">5</div>
-        <div class="stat-label">Tech Domains</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">3<span style="font-size:1.4rem">rd</span></div>
-        <div class="stat-label">Year · CUK</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">∞</div>
-        <div class="stat-label">AIRA Vision</div>
-      </div>
+    <div class="status-pill">
+      <div class="s-dot"></div>
+      Available for attachment &amp; collaborations
+    </div>
+  </div>
+
+  <div class="hero-right reveal" style="transition-delay:0.2s">
+    <div class="hero-card">
+      <div class="hc-label">Live Projects</div>
+      <div class="hc-val">06</div>
+      <div class="hc-desc">Cloneable &amp; deployable</div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-label">Tech Domains</div>
+      <div class="hc-val">05</div>
+      <div class="hc-desc">Finance · Agri · Logistics · NLP · XAI</div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-label">Current Venture</div>
+      <div class="hc-val" style="font-size:1.3rem;letter-spacing:0.05em">AIRA</div>
+      <div class="hc-desc">Applied Intelligence &amp; Research Associates</div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item"><span>◆</span>Python</span>
+    <span class="ticker-item"><span>◆</span>Machine Learning</span>
+    <span class="ticker-item"><span>◆</span>R</span>
+    <span class="ticker-item"><span>◆</span>SQL</span>
+    <span class="ticker-item"><span>◆</span>TensorFlow</span>
+    <span class="ticker-item"><span>◆</span>Power BI</span>
+    <span class="ticker-item"><span>◆</span>Scikit-learn</span>
+    <span class="ticker-item"><span>◆</span>SHAP / XAI</span>
+    <span class="ticker-item"><span>◆</span>NLP</span>
+    <span class="ticker-item"><span>◆</span>Monte Carlo</span>
+    <span class="ticker-item"><span>◆</span>Graph Algorithms</span>
+    <span class="ticker-item"><span>◆</span>Tableau</span>
+    <span class="ticker-item"><span>◆</span>Flask</span>
+    <span class="ticker-item"><span>◆</span>Plotly</span>
+    <span class="ticker-item"><span>◆</span>Pandas</span>
+    <span class="ticker-item"><span>◆</span>Git / GitHub</span>
+    <span class="ticker-item"><span>◆</span>Python</span>
+    <span class="ticker-item"><span>◆</span>Machine Learning</span>
+    <span class="ticker-item"><span>◆</span>R</span>
+    <span class="ticker-item"><span>◆</span>SQL</span>
+    <span class="ticker-item"><span>◆</span>TensorFlow</span>
+    <span class="ticker-item"><span>◆</span>Power BI</span>
+    <span class="ticker-item"><span>◆</span>Scikit-learn</span>
+    <span class="ticker-item"><span>◆</span>SHAP / XAI</span>
+    <span class="ticker-item"><span>◆</span>NLP</span>
+    <span class="ticker-item"><span>◆</span>Monte Carlo</span>
+    <span class="ticker-item"><span>◆</span>Graph Algorithms</span>
+    <span class="ticker-item"><span>◆</span>Tableau</span>
+    <span class="ticker-item"><span>◆</span>Flask</span>
+    <span class="ticker-item"><span>◆</span>Plotly</span>
+    <span class="ticker-item"><span>◆</span>Pandas</span>
+    <span class="ticker-item"><span>◆</span>Git / GitHub</span>
+  </div>
+</div>
+
 <section id="about">
-  <div class="about-grid">
-    <div class="about-text fade-up">
-      <div class="section-label">About Me</div>
-      <h2 class="section-title">Turning <em>Data</em> into Decisions</h2>
-      <p>
-        I am a 3rd-year <strong>BSc Data Science</strong> student at the Co-operative University of Kenya, Nairobi. My work sits at the intersection of machine learning, applied statistics, and software engineering — focused on building systems that actually ship and deliver value.
-      </p>
-      <p>
-        From commodity risk modelling and SME credit scoring to AI-powered supply chain optimization, every project I build is <strong>cloneable, deployable, and production-oriented</strong>. I believe data science that never leaves a notebook doesn't solve problems.
-      </p>
-      <p>
-        I co-founded <strong>AIRA (Applied Intelligence &amp; Research Associates)</strong> with a bold mission: leverage AI and analytics to build transformative solutions across healthcare, finance, and agriculture in Africa.
-      </p>
-      <div class="aira-badge">
-        <div class="aira-badge-dot"></div>
-        <span class="aira-badge-text">Co-Founder &nbsp;·&nbsp; AIRA Applied Intelligence &amp; Research Associates</span>
+  <div class="reveal">
+    <div class="about-tag">About</div>
+    <h2 class="sec-title">Building things<br>that <em>actually work</em></h2>
+    <div class="about-body">
+      <p>I am a data scientist who obsesses over the gap between a model that works in a notebook and a system that delivers in the real world. <strong>Every project I build is cloneable, deployable, and built to solve an actual problem.</strong></p>
+      <p>From Monte Carlo risk engines for commodity traders to AI crop yield predictors for Kenyan farmers — my work sits where data science meets product engineering. I do not just analyse; I build.</p>
+      <p>Currently shaping what is next with <strong>AIRA</strong>, focused on delivering applied AI solutions across Africa's most underserved industries.</p>
+    </div>
+    <div class="aira-block">
+      <div class="aira-role">Data Scientist</div>
+      <div class="aira-name">AIRA — Applied Intelligence &amp; Research Associates</div>
+    </div>
+  </div>
+
+  <div class="skills-col reveal" style="transition-delay:0.2s">
+    <div>
+      <div class="sk-label">Languages</div>
+      <div class="sk-list">
+        <span class="sk hi">Python</span><span class="sk hi">R</span><span class="sk hi">SQL</span>
       </div>
     </div>
-    <div class="fade-up" style="transition-delay:0.15s">
-      <div class="section-label" style="margin-bottom:1.5rem">Technical Stack</div>
-      <div class="skills-grid">
-        <div class="skill-category">
-          <div class="skill-cat-label">Languages</div>
-          <div class="skill-tags">
-            <span class="skill-tag highlight">Python</span>
-            <span class="skill-tag highlight">R</span>
-            <span class="skill-tag highlight">SQL</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-label">ML / AI</div>
-          <div class="skill-tags">
-            <span class="skill-tag highlight">Scikit-learn</span>
-            <span class="skill-tag highlight">TensorFlow</span>
-            <span class="skill-tag">Keras</span>
-            <span class="skill-tag">SHAP</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-label">Analytics &amp; Viz</div>
-          <div class="skill-tags">
-            <span class="skill-tag highlight">Power BI</span>
-            <span class="skill-tag highlight">Tableau</span>
-            <span class="skill-tag">Plotly</span>
-            <span class="skill-tag">Pandas</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-label">Tools &amp; Infra</div>
-          <div class="skill-tags">
-            <span class="skill-tag highlight">Git / GitHub</span>
-            <span class="skill-tag">Flask</span>
-            <span class="skill-tag">Jupyter</span>
-            <span class="skill-tag">Excel</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-label">Domains</div>
-          <div class="skill-tags">
-            <span class="skill-tag">NLP</span>
-            <span class="skill-tag">Monte Carlo</span>
-            <span class="skill-tag">Graph Algos</span>
-            <span class="skill-tag">Time Series</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-label">Soft Skills</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Research</span>
-            <span class="skill-tag">Stakeholder Comms</span>
-            <span class="skill-tag">Strategy</span>
-          </div>
-        </div>
+    <div>
+      <div class="sk-label">ML &amp; AI</div>
+      <div class="sk-list">
+        <span class="sk hi">Scikit-learn</span><span class="sk hi">TensorFlow</span>
+        <span class="sk">Keras</span><span class="sk hi">SHAP</span><span class="sk">XGBoost</span>
+      </div>
+    </div>
+    <div>
+      <div class="sk-label">Analytics &amp; Viz</div>
+      <div class="sk-list">
+        <span class="sk hi">Power BI</span><span class="sk hi">Tableau</span>
+        <span class="sk">Plotly</span><span class="sk">Pandas</span><span class="sk">NumPy</span>
+      </div>
+    </div>
+    <div>
+      <div class="sk-label">Engineering</div>
+      <div class="sk-list">
+        <span class="sk hi">Git / GitHub</span><span class="sk">Flask</span>
+        <span class="sk">REST APIs</span><span class="sk">Jupyter</span>
+      </div>
+    </div>
+    <div>
+      <div class="sk-label">Specialisations</div>
+      <div class="sk-list">
+        <span class="sk">NLP</span><span class="sk">Monte Carlo</span>
+        <span class="sk">Graph Algorithms</span><span class="sk">Time Series</span>
+        <span class="sk">Credit Risk</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
-  <div class="section-label">Portfolio</div>
-  <h2 class="section-title">Featured <em>Projects</em></h2>
-  <p class="section-sub">Six production-oriented, deployable AI and data science projects — each solving a real problem in the Kenyan and African market context.</p>
+  <div class="proj-header reveal">
+    <div>
+      <div class="about-tag">Selected Work</div>
+      <h2 class="sec-title">Six systems.<br><em>Real problems.</em></h2>
+    </div>
+    <div class="proj-count">06</div>
+  </div>
 
-  <div class="projects-grid">
-
-    <!-- Project 1 -->
-    <div class="project-card fade-up">
-      <div class="project-num">01</div>
-      <div class="project-sector">Finance · Risk Management</div>
-      <h3 class="project-title">Commodity Futures Simulator</h3>
-      <p class="project-desc">
-        A Monte Carlo simulation engine for commodity futures pricing with four advanced hedging strategies. Incorporates Value at Risk (VaR), Expected Shortfall, and Sharpe Ratio metrics with interactive Plotly visualizations. Built with Flask for web deployment.
-      </p>
-      <div class="project-tags">
-        <span class="project-tag">Python</span>
-        <span class="project-tag">Flask</span>
-        <span class="project-tag">NumPy</span>
-        <span class="project-tag">Plotly</span>
-        <span class="project-tag">Monte Carlo</span>
-        <span class="project-tag">VaR / ES</span>
+  <div class="bento reveal">
+    <div class="pc pc-1">
+      <div class="pc-n">01</div>
+      <div class="pc-sector">Finance · Risk Management</div>
+      <h3 class="pc-title">Commodity Futures Simulator</h3>
+      <p class="pc-desc">Monte Carlo simulation engine for commodity futures pricing with four hedging strategies and advanced risk metrics — VaR, Expected Shortfall, Sharpe Ratio. Interactive Plotly dashboards, Flask-deployed.</p>
+      <div class="pc-tags">
+        <span class="pc-tag">Python</span><span class="pc-tag">Flask</span>
+        <span class="pc-tag">NumPy</span><span class="pc-tag">Plotly</span>
+        <span class="pc-tag">Monte Carlo</span><span class="pc-tag">VaR</span>
       </div>
-      <a class="project-link" href="https://github.com/EmmanuelOchieng01/Commodity_futures_simulator" target="_blank">View on GitHub</a>
+      <a class="pc-link" href="https://github.com/EmmanuelOchieng01/Commodity_futures_simulator" target="_blank">View project</a>
     </div>
 
-    <!-- Project 2 -->
-    <div class="project-card fade-up" style="transition-delay:0.1s">
-      <div class="project-num">02</div>
-      <div class="project-sector">Agriculture · Kenya</div>
-      <h3 class="project-title">Kenya Agro-Weather Predictor</h3>
-      <p class="project-desc">
-        An AI-powered crop yield prediction system designed for Kenyan smallholder farmers. Integrates weather data and agronomic variables to forecast seasonal yields, enabling data-driven farming decisions in a climate-volatile environment.
-      </p>
-      <div class="project-tags">
-        <span class="project-tag">Python</span>
-        <span class="project-tag">Machine Learning</span>
-        <span class="project-tag">Scikit-learn</span>
-        <span class="project-tag">Jupyter</span>
-        <span class="project-tag">Agriculture</span>
+    <div class="pc pc-2">
+      <div class="pc-n">02</div>
+      <div class="pc-sector">Agriculture · Kenya</div>
+      <h3 class="pc-title">Kenya Agro-Weather Predictor</h3>
+      <p class="pc-desc">AI-powered crop yield prediction for Kenyan smallholder farmers integrating weather and agronomic variables to drive data-informed seasonal decisions.</p>
+      <div class="pc-tags">
+        <span class="pc-tag">Python</span><span class="pc-tag">ML</span>
+        <span class="pc-tag">Scikit-learn</span><span class="pc-tag">AgriTech</span>
       </div>
-      <a class="project-link" href="https://github.com/EmmanuelOchieng01/kenya-agro-weather-predictor" target="_blank">View on GitHub</a>
+      <a class="pc-link" href="https://github.com/EmmanuelOchieng01/kenya-agro-weather-predictor" target="_blank">View project</a>
     </div>
 
-    <!-- Project 3 -->
-    <div class="project-card fade-up" style="transition-delay:0.2s">
-      <div class="project-num">03</div>
-      <div class="project-sector">Fintech · Credit Risk · XAI</div>
-      <h3 class="project-title">SME Credit Scoring System</h3>
-      <p class="project-desc">
-        A machine learning credit scoring engine for Kenyan SMEs using explainable AI (SHAP). Features simulated transaction data, risk prediction models, interpretability dashboards, and is architected for API deployment — a real fintech asset.
-      </p>
-      <div class="project-tags">
-        <span class="project-tag">Python</span>
-        <span class="project-tag">SHAP</span>
-        <span class="project-tag">Scikit-learn</span>
-        <span class="project-tag">XAI</span>
-        <span class="project-tag">API-Ready</span>
-        <span class="project-tag">Credit Risk</span>
+    <div class="pc pc-3">
+      <div class="pc-n">03</div>
+      <div class="pc-sector">Fintech · Credit Risk · XAI</div>
+      <h3 class="pc-title">SME Credit Scoring System</h3>
+      <p class="pc-desc">Explainable ML credit scoring for Kenyan SMEs with SHAP interpretability, simulated transaction data, risk models, and full API-deployment architecture.</p>
+      <div class="pc-tags">
+        <span class="pc-tag">Python</span><span class="pc-tag">SHAP</span>
+        <span class="pc-tag">XAI</span><span class="pc-tag">API-Ready</span>
+        <span class="pc-tag">Credit Risk</span>
       </div>
-      <a class="project-link" href="https://github.com/EmmanuelOchieng01/Small-and-medium-Enterprises-credit-scoring" target="_blank">View on GitHub</a>
+      <a class="pc-link" href="https://github.com/EmmanuelOchieng01/Small-and-medium-Enterprises-credit-scoring" target="_blank">View project</a>
     </div>
 
-    <!-- Project 4 -->
-    <div class="project-card fade-up" style="transition-delay:0.05s">
-      <div class="project-num">04</div>
-      <div class="project-sector">Logistics · Nairobi</div>
-      <h3 class="project-title">Supply Chain Optimizer</h3>
-      <p class="project-desc">
-        An AI-powered logistics routing system that computes optimal delivery paths for produce distribution across Nairobi. Combines machine learning with graph algorithms and renders routes on a live interactive map — end-to-end deployable.
-      </p>
-      <div class="project-tags">
-        <span class="project-tag">Python</span>
-        <span class="project-tag">Graph Algorithms</span>
-        <span class="project-tag">ML</span>
-        <span class="project-tag">Interactive Map</span>
-        <span class="project-tag">Logistics</span>
+    <div class="pc pc-4">
+      <div class="pc-n">04</div>
+      <div class="pc-sector">Logistics · Nairobi</div>
+      <h3 class="pc-title">Supply Chain Optimizer</h3>
+      <p class="pc-desc">AI-powered logistics routing that computes optimal delivery paths for produce distribution across Nairobi. Combines ML with graph algorithms and renders live interactive maps. End-to-end deployable.</p>
+      <div class="pc-tags">
+        <span class="pc-tag">Python</span><span class="pc-tag">Graph Algorithms</span>
+        <span class="pc-tag">ML</span><span class="pc-tag">Interactive Map</span>
       </div>
-      <a class="project-link" href="https://github.com/EmmanuelOchieng01/supply_chain_optimizer" target="_blank">View on GitHub</a>
+      <a class="pc-link" href="https://github.com/EmmanuelOchieng01/supply_chain_optimizer" target="_blank">View project</a>
     </div>
 
-    <!-- Project 5 -->
-    <div class="project-card fade-up" style="transition-delay:0.15s">
-      <div class="project-num">05</div>
-      <div class="project-sector">NLP · Market Intelligence</div>
-      <h3 class="project-title">Market Research Assistant AI</h3>
-      <p class="project-desc">
-        An automated intelligence pipeline that harvests, structures, and summarises global commodity and agriculture news using NLP and sentiment analysis. Converts unstructured newsfeeds into organised market intelligence reports at scale.
-      </p>
-      <div class="project-tags">
-        <span class="project-tag">Python</span>
-        <span class="project-tag">NLP</span>
-        <span class="project-tag">Sentiment Analysis</span>
-        <span class="project-tag">Web Scraping</span>
-        <span class="project-tag">Automation</span>
+    <div class="pc pc-5">
+      <div class="pc-n">05</div>
+      <div class="pc-sector">NLP · Market Intelligence</div>
+      <h3 class="pc-title">Market Research Assistant AI</h3>
+      <p class="pc-desc">Automated pipeline harvesting and summarising global commodity news via NLP and sentiment analysis — converting unstructured feeds into structured intelligence reports.</p>
+      <div class="pc-tags">
+        <span class="pc-tag">Python</span><span class="pc-tag">NLP</span>
+        <span class="pc-tag">Sentiment Analysis</span><span class="pc-tag">Automation</span>
       </div>
-      <a class="project-link" href="https://github.com/EmmanuelOchieng01/Market-research-assistantAI" target="_blank">View on GitHub</a>
+      <a class="pc-link" href="https://github.com/EmmanuelOchieng01/Market-research-assistantAI" target="_blank">View project</a>
     </div>
 
-    <!-- Project 6 -->
-    <div class="project-card fade-up" style="transition-delay:0.25s">
-      <div class="project-num">06</div>
-      <div class="project-sector">Data Engineering · No-Code Tool</div>
-      <h3 class="project-title">Data Exploration Toolkit</h3>
-      <p class="project-desc">
-        A reusable, no-code analytics toolkit: upload any CSV or Excel file and instantly receive data profiling, automated cleaning, statistical summaries, and interactive visualizations through a clean web interface. Built for analysts who need results fast.
-      </p>
-      <div class="project-tags">
-        <span class="project-tag">Python</span>
-        <span class="project-tag">Pandas</span>
-        <span class="project-tag">Plotly</span>
-        <span class="project-tag">Web Interface</span>
-        <span class="project-tag">No-Code</span>
+    <div class="pc pc-6">
+      <div class="pc-n">06</div>
+      <div class="pc-sector">Data Engineering · No-Code</div>
+      <h3 class="pc-title">Data Exploration Toolkit</h3>
+      <p class="pc-desc">Upload any CSV or Excel file and get automated profiling, cleaning, statistical summaries, and interactive charts through a clean web interface. Results in seconds.</p>
+      <div class="pc-tags">
+        <span class="pc-tag">Python</span><span class="pc-tag">Pandas</span>
+        <span class="pc-tag">Plotly</span><span class="pc-tag">Web UI</span>
       </div>
-      <a class="project-link" href="https://github.com/EmmanuelOchieng01/data-exploration-toolkit" target="_blank">View on GitHub</a>
+      <a class="pc-link" href="https://github.com/EmmanuelOchieng01/data-exploration-toolkit" target="_blank">View project</a>
     </div>
-
   </div>
 </section>
 
-<!-- AIRA -->
 <section id="aira">
-  <div class="aira-inner">
-    <div class="fade-up">
-      <div class="section-label">Venture</div>
-      <div class="aira-wordmark">A<span>I</span>RA</div>
-      <p class="aira-full">
-        Applied Intelligence<br>&amp; Research Associates
-      </p>
-      <p style="font-size:0.95rem; color:var(--white-dim); margin-top:1.5rem; line-height:1.75; max-width:340px;">
-        A data-driven venture co-founded with Hilda Ochieng (Business Development) targeting a <strong style="color:var(--white)">$1B valuation</strong> by end of 2026 through AI solutions for healthcare, agriculture, and financial services across Africa.
-      </p>
-      <div style="display:flex; gap:0.75rem; margin-top:1.75rem; flex-wrap:wrap;">
-        <div style="padding:0.5rem 1rem; border:1px solid var(--teal-dim); background:rgba(29,168,126,0.07); font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; color:var(--teal); text-transform:uppercase;">Healthcare</div>
-        <div style="padding:0.5rem 1rem; border:1px solid var(--teal-dim); background:rgba(29,168,126,0.07); font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; color:var(--teal); text-transform:uppercase;">Fintech</div>
-        <div style="padding:0.5rem 1rem; border:1px solid var(--teal-dim); background:rgba(29,168,126,0.07); font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; color:var(--teal); text-transform:uppercase;">AgriTech</div>
-        <div style="padding:0.5rem 1rem; border:1px solid var(--teal-dim); background:rgba(29,168,126,0.07); font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; color:var(--teal); text-transform:uppercase;">Research</div>
-      </div>
-    </div>
-    <div class="aira-pillars fade-up" style="transition-delay:0.15s">
-      <div class="aira-pillar">
-        <div class="aira-pillar-icon">AI</div>
-        <div>
-          <div class="aira-pillar-title">Applied Intelligence</div>
-          <div class="aira-pillar-desc">Production-grade ML models and AI systems solving measurable business problems across African industries.</div>
-        </div>
-      </div>
-      <div class="aira-pillar">
-        <div class="aira-pillar-icon">BD</div>
-        <div>
-          <div class="aira-pillar-title">Business Development</div>
-          <div class="aira-pillar-desc">Enterprise client acquisition, government tenders, and NGO partnerships converting technical solutions into revenue.</div>
-        </div>
-      </div>
-      <div class="aira-pillar">
-        <div class="aira-pillar-icon">R&amp;D</div>
-        <div>
-          <div class="aira-pillar-title">Research &amp; Publications</div>
-          <div class="aira-pillar-desc">Applied research that builds AIRA's thought leadership, attracts inbound clients, and positions us for Series A funding.</div>
-        </div>
-      </div>
-      <div class="aira-pillar">
-        <div class="aira-pillar-icon">SaaS</div>
-        <div>
-          <div class="aira-pillar-title">Product &amp; SaaS</div>
-          <div class="aira-pillar-desc">Productising GitHub projects into recurring-revenue software platforms targeting healthcare, insurance, and agriculture sectors.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner fade-up">
-    <div class="section-label" style="justify-content:center">Get In Touch</div>
-    <h2 class="section-title">Let's <em>Build</em> Together</h2>
-    <p style="color:var(--white-dim); font-size:1rem; line-height:1.7; margin-bottom:1rem;">
-      Open to industrial attachment opportunities, data science collaborations, and AIRA partnerships. Always ready to discuss how AI can solve your organisation's challenges.
+  <div class="reveal">
+    <div class="about-tag">Venture</div>
+    <div class="aira-wm">A<span>I</span>RA</div>
+    <div class="aira-full-name">Applied Intelligence<br>&amp; Research Associates</div>
+    <p class="aira-desc">
+      A data-driven AI venture built to solve <strong>Africa's most pressing challenges</strong> through applied intelligence — pairing deep technical capability with strategic business development to reach <strong>$1B by end of 2026.</strong>
     </p>
-    <a class="contact-email" href="mailto:officialimanuel01@gmail.com">officialimanuel01@gmail.com</a>
-    <div class="social-links">
-      <a class="social-link" href="https://github.com/EmmanuelOchieng01" target="_blank">GitHub</a>
-      <a class="social-link" href="https://www.linkedin.com/in/emmanuel-ochieng-a656a1261/" target="_blank">LinkedIn</a>
-      <a class="social-link" href="mailto:officialimanuel01@gmail.com">Email</a>
+    <div class="aira-sectors">
+      <div class="aira-sec">Healthcare</div>
+      <div class="aira-sec">Fintech</div>
+      <div class="aira-sec">AgriTech</div>
+      <div class="aira-sec">Research</div>
+    </div>
+  </div>
+
+  <div class="pillars reveal" style="transition-delay:0.2s">
+    <div class="pillar">
+      <div class="p-icon">AI</div>
+      <div>
+        <div class="p-title">Applied Intelligence</div>
+        <div class="p-desc">Production ML models solving measurable problems across African industries.</div>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="p-icon">BD</div>
+      <div>
+        <div class="p-title">Business Development</div>
+        <div class="p-desc">Enterprise contracts, government tenders, and NGO partnerships turning solutions into revenue.</div>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="p-icon">R&amp;D</div>
+      <div>
+        <div class="p-title">Research</div>
+        <div class="p-desc">Applied research building thought leadership and the foundation for Series A funding.</div>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="p-icon">SaaS</div>
+      <div>
+        <div class="p-title">Product &amp; SaaS</div>
+        <div class="p-desc">Turning projects into recurring-revenue platforms for healthcare, insurance &amp; agriculture.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<section id="contact">
+  <div class="reveal">
+    <div class="about-tag">Contact</div>
+    <div class="c-big">Let's build<br><em>something</em><br>real.</div>
+    <p class="c-sub">Open to attachment opportunities, data science collaborations, and conversations about what AI can do for your organisation.</p>
+    <a class="c-email" href="mailto:officialimanuel01@gmail.com">officialimanuel01@gmail.com</a>
+  </div>
+  <div class="contact-right reveal" style="transition-delay:0.2s">
+    <a class="c-link" href="https://github.com/EmmanuelOchieng01" target="_blank">
+      <span class="c-link-label">GitHub</span>
+      <span class="c-link-arrow">↗</span>
+    </a>
+    <a class="c-link" href="https://www.linkedin.com/in/emmanuel-ochieng-a656a1261/" target="_blank">
+      <span class="c-link-label">LinkedIn</span>
+      <span class="c-link-arrow">↗</span>
+    </a>
+    <a class="c-link" href="mailto:officialimanuel01@gmail.com">
+      <span class="c-link-label">Send an email</span>
+      <span class="c-link-arrow">↗</span>
+    </a>
+  </div>
+</section>
+
 <footer>
-  <p class="footer-copy">© 2026 <span>Emmanuel Omondi Ochieng</span> &nbsp;·&nbsp; Data Scientist · Nairobi, Kenya</p>
-  <p class="footer-copy"><span>AIRA</span> — Applied Intelligence &amp; Research Associates</p>
+  <div class="f-left">Emmanuel Omondi Ochieng — Nairobi, Kenya</div>
+  <div class="f-right"><span>AIRA</span> · Applied Intelligence &amp; Research Associates · 2026</div>
 </footer>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+});
+(function animRing(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cursor.style.transform='translate(-50%,-50%) scale(2)';
+    ring.style.width='56px';ring.style.height='56px';
+  });
+  el.addEventListener('mouseleave',()=>{
+    cursor.style.transform='translate(-50%,-50%) scale(1)';
+    ring.style.width='36px';ring.style.height='36px';
+  });
+});
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('up')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
